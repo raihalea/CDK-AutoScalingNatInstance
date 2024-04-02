@@ -2,7 +2,7 @@ import { awscdk } from 'projen';
 const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: '2.1.0',
   defaultReleaseBranch: 'main',
-  name: 'ASGNatInstance',
+  name: 'BottleRocketNat',
   projenrcTs: true,
   repository: 'https://github.com/raihalea/CDK-AutoScalingNatInstance.git',
   gitignore: [
