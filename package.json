@@ -1,5 +1,9 @@
 {
   "name": "ASGNatInstance",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raihalea/CDK-AutoScalingNatInstance.git"
+  },
   "scripts": {
     "build": "npx projen build",
     "bundle": "npx projen bundle",

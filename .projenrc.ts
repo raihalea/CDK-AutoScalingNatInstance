@@ -4,7 +4,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   defaultReleaseBranch: 'main',
   name: 'ASGNatInstance',
   projenrcTs: true,
-
+  repository: 'https://github.com/raihalea/CDK-AutoScalingNatInstance.git',
   gitignore: [
     'cdk.context.json',
     'test/__snapshots__',
