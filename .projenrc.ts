@@ -5,9 +5,13 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   name: 'ASGNatInstance',
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  gitignore: [
+    'cdk.context.json',
+    'test/__snapshots__',
+  ],
+  deps: [
+    'constructs',
+  ],
+  devDeps: ['@types/aws-lambda'],
 });
 project.synth();
