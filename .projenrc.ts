@@ -58,7 +58,7 @@ if (project.github) {
         },
         {
           name: 'Create Pull Request',
-          uses: 'peter-evans/create-pull-request@v4',
+          uses: 'peter-evans/create-pull-request@v6',
           if: '${{ steps.status.outputs.status }}',
           with: {
             token: '${{ steps.generate_token.outputs.token }}',

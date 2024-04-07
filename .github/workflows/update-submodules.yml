@@ -29,7 +29,7 @@ jobs:
         run: echo "status=$(git status -s)" >> $GITHUB_OUTPUT
       - name: Create Pull Request
         if: ${{ steps.status.outputs.status }}
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ steps.generate_token.outputs.token }}
           message: "chore(deps): upgrade submodules"
