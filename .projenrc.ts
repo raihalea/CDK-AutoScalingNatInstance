@@ -39,7 +39,7 @@ if (project.github) {
         {
           name: 'Find mutations',
           id: 'crete_patch',
-          run: `|-
+          run: `
           git add ./
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
           `,
