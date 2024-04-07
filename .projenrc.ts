@@ -53,6 +53,7 @@ if (project.github) {
         },
         {
           name: 'git status',
+          id: 'status',
           run: 'echo "status=$(git status -s)" >> $GITHUB_OUTPUT',
         },
         {

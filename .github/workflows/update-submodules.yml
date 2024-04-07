@@ -25,6 +25,7 @@ jobs:
       - name: update submodules
         run: git submodule update --remote --recursive
       - name: git status
+        id: status
         run: echo "status=$(git status -s)" >> $GITHUB_OUTPUT
       - name: Create Pull Request
         if: ${{ steps.status.outputs.status }}
