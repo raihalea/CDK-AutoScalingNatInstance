@@ -1,0 +1,6 @@
+[submodule "CTFd"]
+	path = CTFd
+	url = https://github.com/raihalea/CTFd.git
+[submodule "subtest"]
+	path = subtest
+	url = https://github.com/raihalea/submoduletest.git
