@@ -1,0 +1,822 @@
+Resources:
+  BaseVPCBBE14B23:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/Resource
+  BaseVPCPublicSubnet1Subnet9D3822C9:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      CidrBlock: 10.0.0.0/18
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC/PublicSubnet1
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PublicSubnet1/Subnet
+  BaseVPCPublicSubnet1RouteTableEC9C291A:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC/PublicSubnet1
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PublicSubnet1/RouteTable
+  BaseVPCPublicSubnet1RouteTableAssociationA5B8C1F5:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: BaseVPCPublicSubnet1RouteTableEC9C291A
+      SubnetId:
+        Ref: BaseVPCPublicSubnet1Subnet9D3822C9
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PublicSubnet1/RouteTableAssociation
+  BaseVPCPublicSubnet1DefaultRouteDC1D778E:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: BaseVPCIGW77A1FE18
+      RouteTableId:
+        Ref: BaseVPCPublicSubnet1RouteTableEC9C291A
+    DependsOn:
+      - BaseVPCVPCGWD5290736
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PublicSubnet1/DefaultRoute
+  BaseVPCPublicSubnet2SubnetAC459427:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: ""
+      CidrBlock: 10.0.64.0/18
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC/PublicSubnet2
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PublicSubnet2/Subnet
+  BaseVPCPublicSubnet2RouteTableB6093BDB:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC/PublicSubnet2
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PublicSubnet2/RouteTable
+  BaseVPCPublicSubnet2RouteTableAssociation2AF792B0:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: BaseVPCPublicSubnet2RouteTableB6093BDB
+      SubnetId:
+        Ref: BaseVPCPublicSubnet2SubnetAC459427
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PublicSubnet2/RouteTableAssociation
+  BaseVPCPublicSubnet2DefaultRoute6FF0A00A:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: BaseVPCIGW77A1FE18
+      RouteTableId:
+        Ref: BaseVPCPublicSubnet2RouteTableB6093BDB
+    DependsOn:
+      - BaseVPCVPCGWD5290736
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PublicSubnet2/DefaultRoute
+  BaseVPCPrivateSubnet1Subnet4F77AA52:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      CidrBlock: 10.0.128.0/18
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC/PrivateSubnet1
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PrivateSubnet1/Subnet
+  BaseVPCPrivateSubnet1RouteTableE56FFAEA:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC/PrivateSubnet1
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PrivateSubnet1/RouteTable
+  BaseVPCPrivateSubnet1RouteTableAssociationA667530D:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: BaseVPCPrivateSubnet1RouteTableE56FFAEA
+      SubnetId:
+        Ref: BaseVPCPrivateSubnet1Subnet4F77AA52
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PrivateSubnet1/RouteTableAssociation
+  BaseVPCPrivateSubnet2SubnetEF85CD40:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: ""
+      CidrBlock: 10.0.192.0/18
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC/PrivateSubnet2
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PrivateSubnet2/Subnet
+  BaseVPCPrivateSubnet2RouteTable698DEF6C:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC/PrivateSubnet2
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PrivateSubnet2/RouteTable
+  BaseVPCPrivateSubnet2RouteTableAssociation7219B45B:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: BaseVPCPrivateSubnet2RouteTable698DEF6C
+      SubnetId:
+        Ref: BaseVPCPrivateSubnet2SubnetEF85CD40
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/PrivateSubnet2/RouteTableAssociation
+  BaseVPCIGW77A1FE18:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: ASGNatInstance-dev/Base/VPC
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/IGW
+  BaseVPCVPCGWD5290736:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId:
+        Ref: BaseVPCIGW77A1FE18
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/VPC/VPCGW
+  BaseEIPAAB95464:
+    Type: AWS::EC2::EIP
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/Base/EIP
+  BottleNatCluster06953E2D:
+    Type: AWS::ECS::Cluster
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/Cluster/Resource
+  BottleNatClusterFD88C92C:
+    Type: AWS::ECS::ClusterCapacityProviderAssociations
+    Properties:
+      CapacityProviders:
+        - Ref: BottleNatAsgCapacityProvider97039DC9
+      Cluster:
+        Ref: BottleNatCluster06953E2D
+      DefaultCapacityProviderStrategy: []
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/Cluster/Cluster
+  BottleNatSG671F734A:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: ASGNatInstance-dev/BottleNat/SG
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          Description: Allow all outbound traffic by default
+          IpProtocol: "-1"
+      VpcId:
+        Ref: BaseVPCBBE14B23
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/SG/Resource
+  BottleNatRole3CB5DDE7:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/AmazonSSMManagedInstanceCore
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/Role/Resource
+  BottleNatRoleDefaultPolicy4E1CD88E:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - ecs:DeregisterContainerInstance
+              - ecs:RegisterContainerInstance
+              - ecs:Submit*
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - BottleNatCluster06953E2D
+                - Arn
+          - Action:
+              - ecs:Poll
+              - ecs:StartTelemetrySession
+            Condition:
+              ArnEquals:
+                ecs:cluster:
+                  Fn::GetAtt:
+                    - BottleNatCluster06953E2D
+                    - Arn
+            Effect: Allow
+            Resource: "*"
+          - Action:
+              - ecs:DiscoverPollEndpoint
+              - ecr:GetAuthorizationToken
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Effect: Allow
+            Resource: "*"
+        Version: "2012-10-17"
+      PolicyName: BottleNatRoleDefaultPolicy4E1CD88E
+      Roles:
+        - Ref: BottleNatRole3CB5DDE7
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/Role/DefaultPolicy/Resource
+  BottleNatLaunchTemplateProfile140E171F:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - Ref: BottleNatRole3CB5DDE7
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/LaunchTemplate/Profile
+  BottleNatLaunchTemplate2301F89B:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        IamInstanceProfile:
+          Arn:
+            Fn::GetAtt:
+              - BottleNatLaunchTemplateProfile140E171F
+              - Arn
+        ImageId:
+          Ref: SsmParameterValueawsservicebottlerocketawsecs1x8664latestimageidC96584B6F00A464EAD1953AFF4B05118Parameter
+        InstanceType: t4g.micro
+        SecurityGroupIds:
+          - Fn::GetAtt:
+              - BottleNatSG671F734A
+              - GroupId
+        TagSpecifications:
+          - ResourceType: instance
+            Tags:
+              - Key: Name
+                Value: ASGNatInstance-dev/BottleNat/LaunchTemplate
+          - ResourceType: volume
+            Tags:
+              - Key: Name
+                Value: ASGNatInstance-dev/BottleNat/LaunchTemplate
+        UserData:
+          Fn::Base64:
+            Fn::Join:
+              - ""
+              - - |-
+                  [settings.kernel.sysctl]
+                        "net.ipv4.ip_forward" = "1"
+                  [settings.ecs]
+                  cluster = "
+                - Ref: BottleNatCluster06953E2D
+                - '"'
+      TagSpecifications:
+        - ResourceType: launch-template
+          Tags:
+            - Key: Name
+              Value: ASGNatInstance-dev/BottleNat/LaunchTemplate
+    DependsOn:
+      - BottleNatRoleDefaultPolicy4E1CD88E
+      - BottleNatRole3CB5DDE7
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/LaunchTemplate/Resource
+  BottleNatASGB8617C51:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      CapacityRebalance: true
+      MaxSize: "1"
+      MinSize: "1"
+      MixedInstancesPolicy:
+        InstancesDistribution:
+          OnDemandPercentageAboveBaseCapacity: 0
+        LaunchTemplate:
+          LaunchTemplateSpecification:
+            LaunchTemplateId:
+              Ref: BottleNatLaunchTemplate2301F89B
+            Version:
+              Fn::GetAtt:
+                - BottleNatLaunchTemplate2301F89B
+                - LatestVersionNumber
+      VPCZoneIdentifier:
+        - Ref: BaseVPCPrivateSubnet1Subnet4F77AA52
+        - Ref: BaseVPCPrivateSubnet2SubnetEF85CD40
+    UpdatePolicy:
+      AutoScalingScheduledAction:
+        IgnoreUnmodifiedGroupSizeProperties: true
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/ASG
+  BottleNatASGDrainECSHookFunctionServiceRole704D9642:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/DrainECSHook/Function/ServiceRole/Resource
+  BottleNatASGDrainECSHookFunctionServiceRoleDefaultPolicy5F0F0675:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - ec2:DescribeInstances
+              - ec2:DescribeInstanceAttribute
+              - ec2:DescribeInstanceStatus
+              - ec2:DescribeHosts
+            Effect: Allow
+            Resource: "*"
+          - Action: autoscaling:CompleteLifecycleAction
+            Effect: Allow
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:"
+                  - Ref: AWS::Partition
+                  - ":autoscaling:us-east-1:"
+                  - Ref: AWS::AccountId
+                  - :autoScalingGroup:*:autoScalingGroupName/
+                  - Ref: BottleNatASGB8617C51
+          - Action:
+              - ecs:DescribeContainerInstances
+              - ecs:DescribeTasks
+            Condition:
+              ArnEquals:
+                ecs:cluster:
+                  Fn::GetAtt:
+                    - BottleNatCluster06953E2D
+                    - Arn
+            Effect: Allow
+            Resource: "*"
+          - Action:
+              - ecs:ListContainerInstances
+              - ecs:SubmitContainerStateChange
+              - ecs:SubmitTaskStateChange
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - BottleNatCluster06953E2D
+                - Arn
+          - Action:
+              - ecs:UpdateContainerInstancesState
+              - ecs:ListTasks
+            Condition:
+              ArnEquals:
+                ecs:cluster:
+                  Fn::GetAtt:
+                    - BottleNatCluster06953E2D
+                    - Arn
+            Effect: Allow
+            Resource: "*"
+        Version: "2012-10-17"
+      PolicyName: BottleNatASGDrainECSHookFunctionServiceRoleDefaultPolicy5F0F0675
+      Roles:
+        - Ref: BottleNatASGDrainECSHookFunctionServiceRole704D9642
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/DrainECSHook/Function/ServiceRole/DefaultPolicy/Resource
+  BottleNatASGDrainECSHookFunction4D9D2B8C:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ZipFile: |
+          import boto3, json, os, time
+
+          ecs = boto3.client('ecs')
+          autoscaling = boto3.client('autoscaling')
+
+
+          def lambda_handler(event, context):
+            print(json.dumps(dict(event, ResponseURL='...')))
+            cluster = os.environ['CLUSTER']
+            snsTopicArn = event['Records'][0]['Sns']['TopicArn']
+            lifecycle_event = json.loads(event['Records'][0]['Sns']['Message'])
+            instance_id = lifecycle_event.get('EC2InstanceId')
+            if not instance_id:
+              print('Got event without EC2InstanceId: %s', json.dumps(dict(event, ResponseURL='...')))
+              return
+
+            instance_arn = container_instance_arn(cluster, instance_id)
+            print('Instance %s has container instance ARN %s' % (lifecycle_event['EC2InstanceId'], instance_arn))
+
+            if not instance_arn:
+              return
+
+            task_arns = container_instance_task_arns(cluster, instance_arn)
+
+            if task_arns:
+              print('Instance ARN %s has task ARNs %s' % (instance_arn, ', '.join(task_arns)))
+
+            while has_tasks(cluster, instance_arn, task_arns):
+              time.sleep(10)
+
+            try:
+              print('Terminating instance %s' % instance_id)
+              autoscaling.complete_lifecycle_action(
+                  LifecycleActionResult='CONTINUE',
+                  **pick(lifecycle_event, 'LifecycleHookName', 'LifecycleActionToken', 'AutoScalingGroupName'))
+            except Exception as e:
+              # Lifecycle action may have already completed.
+              print(str(e))
+
+
+          def container_instance_arn(cluster, instance_id):
+            """Turn an instance ID into a container instance ARN."""
+            arns = ecs.list_container_instances(cluster=cluster, filter='ec2InstanceId==' + instance_id)['containerInstanceArns']
+            if not arns:
+              return None
+            return arns[0]
+
+          def container_instance_task_arns(cluster, instance_arn):
+            """Fetch tasks for a container instance ARN."""
+            arns = ecs.list_tasks(cluster=cluster, containerInstance=instance_arn)['taskArns']
+            return arns
+
+          def has_tasks(cluster, instance_arn, task_arns):
+            """Return True if the instance is running tasks for the given cluster."""
+            instances = ecs.describe_container_instances(cluster=cluster, containerInstances=[instance_arn])['containerInstances']
+            if not instances:
+              return False
+            instance = instances[0]
+
+            if instance['status'] == 'ACTIVE':
+              # Start draining, then try again later
+              set_container_instance_to_draining(cluster, instance_arn)
+              return True
+
+            task_count = None
+
+            if task_arns:
+              # Fetch details for tasks running on the container instance
+              tasks = ecs.describe_tasks(cluster=cluster, tasks=task_arns)['tasks']
+              if tasks:
+                # Consider any non-stopped tasks as running
+                task_count = sum(task['lastStatus'] != 'STOPPED' for task in tasks) + instance['pendingTasksCount']
+
+            if not task_count:
+              # Fallback to instance task counts if detailed task information is unavailable
+              task_count = instance['runningTasksCount'] + instance['pendingTasksCount']
+
+            print('Instance %s has %s tasks' % (instance_arn, task_count))
+
+            return task_count > 0
+
+          def set_container_instance_to_draining(cluster, instance_arn):
+            ecs.update_container_instances_state(
+                cluster=cluster,
+                containerInstances=[instance_arn], status='DRAINING')
+
+
+          def pick(dct, *keys):
+            """Pick a subset of a dict."""
+            return {k: v for k, v in dct.items() if k in keys}
+      Environment:
+        Variables:
+          CLUSTER:
+            Ref: BottleNatCluster06953E2D
+      Handler: index.lambda_handler
+      Role:
+        Fn::GetAtt:
+          - BottleNatASGDrainECSHookFunctionServiceRole704D9642
+          - Arn
+      Runtime: python3.9
+      Timeout: 310
+    DependsOn:
+      - BottleNatASGDrainECSHookFunctionServiceRoleDefaultPolicy5F0F0675
+      - BottleNatASGDrainECSHookFunctionServiceRole704D9642
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/DrainECSHook/Function/Resource
+  BottleNatASGDrainECSHookFunctionAllowInvokeASGNatInstancedevBottleNatASGLifecycleHookDrainHookTopicCCEA9D1E0D425155:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - BottleNatASGDrainECSHookFunction4D9D2B8C
+          - Arn
+      Principal: sns.amazonaws.com
+      SourceArn:
+        Ref: BottleNatASGLifecycleHookDrainHookTopicD1822056
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/DrainECSHook/Function/AllowInvoke:ASGNatInstancedevBottleNatASGLifecycleHookDrainHookTopicCCEA9D1E
+  BottleNatASGDrainECSHookFunctionTopicC9ABB0A5:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Endpoint:
+        Fn::GetAtt:
+          - BottleNatASGDrainECSHookFunction4D9D2B8C
+          - Arn
+      Protocol: lambda
+      TopicArn:
+        Ref: BottleNatASGLifecycleHookDrainHookTopicD1822056
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/DrainECSHook/Function/Topic/Resource
+  BottleNatASGLifecycleHookDrainHookTopicD1822056:
+    Type: AWS::SNS::Topic
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/LifecycleHookDrainHook/Topic/Resource
+  BottleNatASGLifecycleHookDrainHookRoleD4CDDBB0:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: autoscaling.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/LifecycleHookDrainHook/Role/Resource
+  BottleNatASGLifecycleHookDrainHookRoleDefaultPolicyF9310EAE:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action: sns:Publish
+            Effect: Allow
+            Resource:
+              Ref: BottleNatASGLifecycleHookDrainHookTopicD1822056
+        Version: "2012-10-17"
+      PolicyName: BottleNatASGLifecycleHookDrainHookRoleDefaultPolicyF9310EAE
+      Roles:
+        - Ref: BottleNatASGLifecycleHookDrainHookRoleD4CDDBB0
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/LifecycleHookDrainHook/Role/DefaultPolicy/Resource
+  BottleNatASGLifecycleHookDrainHook130E00F5:
+    Type: AWS::AutoScaling::LifecycleHook
+    Properties:
+      AutoScalingGroupName:
+        Ref: BottleNatASGB8617C51
+      DefaultResult: CONTINUE
+      HeartbeatTimeout: 300
+      LifecycleTransition: autoscaling:EC2_INSTANCE_TERMINATING
+      NotificationTargetARN:
+        Ref: BottleNatASGLifecycleHookDrainHookTopicD1822056
+      RoleARN:
+        Fn::GetAtt:
+          - BottleNatASGLifecycleHookDrainHookRoleD4CDDBB0
+          - Arn
+    DependsOn:
+      - BottleNatASGLifecycleHookDrainHookRoleDefaultPolicyF9310EAE
+      - BottleNatASGLifecycleHookDrainHookRoleD4CDDBB0
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/ASG/LifecycleHookDrainHook/Resource
+  BottleNatAsgCapacityProvider97039DC9:
+    Type: AWS::ECS::CapacityProvider
+    Properties:
+      AutoScalingGroupProvider:
+        AutoScalingGroupArn:
+          Ref: BottleNatASGB8617C51
+        ManagedScaling:
+          Status: ENABLED
+          TargetCapacity: 100
+        ManagedTerminationProtection: DISABLED
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/AsgCapacityProvider/AsgCapacityProvider
+  BottleNatTaskDefTaskRole64EE713E:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/TaskDef/TaskRole/Resource
+  BottleNatTaskDefTaskRoleDefaultPolicy057D4A36:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - ssmmessages:CreateControlChannel
+              - ssmmessages:CreateDataChannel
+              - ssmmessages:OpenControlChannel
+              - ssmmessages:OpenDataChannel
+            Effect: Allow
+            Resource: "*"
+          - Action: logs:DescribeLogGroups
+            Effect: Allow
+            Resource: "*"
+          - Action:
+              - logs:CreateLogStream
+              - logs:DescribeLogStreams
+              - logs:PutLogEvents
+            Effect: Allow
+            Resource: "*"
+        Version: "2012-10-17"
+      PolicyName: BottleNatTaskDefTaskRoleDefaultPolicy057D4A36
+      Roles:
+        - Ref: BottleNatTaskDefTaskRole64EE713E
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/TaskDef/TaskRole/DefaultPolicy/Resource
+  BottleNatTaskDef8EA35051:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      ContainerDefinitions:
+        - Essential: true
+          Image: nginx
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group:
+                Ref: BottleNatTaskDefNatContainerLogGroup174B73CF
+              awslogs-stream-prefix: NatContaienr
+              awslogs-region: us-east-1
+          MemoryReservation: 256
+          Name: NatContainer
+          PortMappings:
+            - ContainerPort: 80
+              HostPort: 80
+              Protocol: tcp
+      ExecutionRoleArn:
+        Fn::GetAtt:
+          - BottleNatTaskDefExecutionRole0F3F20C7
+          - Arn
+      Family: ASGNatInstancedevBottleNatTaskDefBFC2DA9A
+      NetworkMode: bridge
+      RequiresCompatibilities:
+        - EC2
+      TaskRoleArn:
+        Fn::GetAtt:
+          - BottleNatTaskDefTaskRole64EE713E
+          - Arn
+      ContainerDefdddinitions:
+        LinuxParameters:
+          Capabilities:
+            Add: NET_ADMIN
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/TaskDef/Resource
+  BottleNatTaskDefNatContainerLogGroup174B73CF:
+    Type: AWS::Logs::LogGroup
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/TaskDef/NatContainer/LogGroup/Resource
+  BottleNatTaskDefExecutionRole0F3F20C7:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/TaskDef/ExecutionRole/Resource
+  BottleNatTaskDefExecutionRoleDefaultPolicy877A0BE4:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - BottleNatTaskDefNatContainerLogGroup174B73CF
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: BottleNatTaskDefExecutionRoleDefaultPolicy877A0BE4
+      Roles:
+        - Ref: BottleNatTaskDefExecutionRole0F3F20C7
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/TaskDef/ExecutionRole/DefaultPolicy/Resource
+  BottleNatServiceD5DD40A1:
+    Type: AWS::ECS::Service
+    Properties:
+      CapacityProviderStrategy:
+        - CapacityProvider:
+            Ref: BottleNatAsgCapacityProvider97039DC9
+          Weight: 1
+      Cluster:
+        Ref: BottleNatCluster06953E2D
+      DeploymentConfiguration:
+        Alarms:
+          AlarmNames: []
+          Enable: false
+          Rollback: false
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+      EnableECSManagedTags: false
+      EnableExecuteCommand: true
+      SchedulingStrategy: REPLICA
+      TaskDefinition:
+        Ref: BottleNatTaskDef8EA35051
+    DependsOn:
+      - BottleNatTaskDefTaskRoleDefaultPolicy057D4A36
+      - BottleNatTaskDefTaskRole64EE713E
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/BottleNat/Service/Service
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/2WS227CMAyGn2X3IRtMk3aL2AmJi4qi3U6uMcwjTaocmFDVd59p6crhKr8/x3byJxM9fnzSD3fwG0a43o0MF7rOI+BOCfqqCSe6/qxQzTb2M5upLBWGMU+FpXhkg1q6FGkFhaGBD2wagkOGyM7+b1aZ5z1EGnrMbSQv+l3oLxxOQ0/RNMqxvkuy7dbXeaZywuQ5Ht69S1U79QIsIFn8XlFZGelwzF+SRhEGXc9MCjL2mL+VM6gApWPm3Z7X5M/uEdQ0bK/zbek1e8XJCsLuhTZsubfgmjgbgS35MyZ1Ofk9Y2dpJxvFUOp66Tqj2zVz8iitXYOa2xDBIskpNmykDFJ0AcGw3ep6KkHeBf/u3bAFbwgPaOjDuV3r3zlolIGyWIOu38TV/lrnOiNfcggSNSpYsVpeOqDnqt9wEa9cxe0/a4V0d1spWbjhgL1uGrWk4JLvjMnAQ0mnd+sTjbJuTfon3O/Hz3p8/OM/gXnkk41ckl526x/Mc94LAAMAAA==
+    Metadata:
+      aws:cdk:path: ASGNatInstance-dev/CDKMetadata/Default
+Parameters:
+  SsmParameterValueawsservicebottlerocketawsecs1x8664latestimageidC96584B6F00A464EAD1953AFF4B05118Parameter:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/bottlerocket/aws-ecs-1/x86_64/latest/image_id
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - "1"
+                  - "2"
+                  - "3"
+                  - "4"
+                  - "5"
+                - Ref: BootstrapVersion
+        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
+

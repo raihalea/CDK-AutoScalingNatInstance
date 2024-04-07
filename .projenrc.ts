@@ -1,4 +1,4 @@
-import { awscdk } from 'projen';
+import { awscdk, github } from 'projen';
 const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: '2.1.0',
   defaultReleaseBranch: 'main',
@@ -13,5 +13,9 @@ const project = new awscdk.AwsCdkTypeScriptApp({
     'constructs',
   ],
   devDeps: ['@types/aws-lambda'],
+  projenCredentials: github.GithubCredentials.fromApp({
+    appIdSecret: 'APP_ID',
+    privateKeySecret: 'PRIVATE_KEY',
+  }),
 });
 project.synth();

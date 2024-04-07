@@ -1,5 +1,4 @@
 import { App, Stack, StackProps } from 'aws-cdk-lib';
-import { Vpc, SubnetType } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 import { Base } from './lib/base';
 import { BottleNat } from './lib/bottleNat';
