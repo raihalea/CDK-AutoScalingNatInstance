@@ -37,15 +37,6 @@ if (project.github) {
           run: 'git submodule update --remote --recursive',
         },
         {
-          name: 'Find mutations',
-          id: 'crete_patch',
-          run: `
-          git add ./
-          git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
-          `,
-          workingDirectory: './',
-        },
-        {
           name: 'Generate token',
           id: 'generate_token',
           uses: 'actions/create-github-app-token@v1',
