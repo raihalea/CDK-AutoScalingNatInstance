@@ -53,7 +53,7 @@ if (project.github) {
         },
         {
           name: 'git status',
-          run: 'echo "::set-output name=status::$(git status -s)"',
+          run: 'echo "status=$(git status -s)" >> $GITHUB_OUTPUT',
         },
         {
           name: 'Create Pull Request',
