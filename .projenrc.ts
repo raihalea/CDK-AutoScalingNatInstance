@@ -31,11 +31,6 @@ if (project.github) {
         contents: JobPermission.READ,
       },
       steps: [
-        { uses: 'actions/checkout@v4' },
-        {
-          name: 'update submodules',
-          run: 'git submodule update --remote --recursive',
-        },
         {
           name: 'Generate token',
           id: 'generate_token',
@@ -46,13 +41,31 @@ if (project.github) {
           },
         },
         {
+          name: 'check out',
+          uses: 'actions/checkout@v4',
+          with: {
+            submodules: 'recursive',
+          },
+        },
+        {
+          name: 'update submodules',
+          run: 'git submodule update --remote --recursive',
+        },
+        {
+          name: 'git status',
+          run: 'echo "::set-output name=status::$(git status -s)"',
+        },
+        {
           name: 'Create Pull Request',
-          uses: 'peter-evans/create-pull-request@v6',
+          uses: 'peter-evans/create-pull-request@v4',
+          if: '${{ steps.status.outputs.status }}',
           with: {
             token: '${{ steps.generate_token.outputs.token }}',
-            message: 'chore(deps): upgrade dependencies',
-            branch: 'github-actions/upgrade',
-            title: 'chore(deps): upgrade dependencies',
+            message: 'chore(deps): upgrade submodules',
+            branch: 'github-actions/upgrade-submodules',
+            title: 'chore(deps): upgrade submodules',
+            author: 'github-actions <github-actions@github.com>',
+            comitter: 'github-actions <github-actions@github.com>',
           },
         },
       ],
